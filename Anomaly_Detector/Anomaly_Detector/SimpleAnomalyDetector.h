@@ -2,7 +2,7 @@
 #ifndef SIMPLEANOMALYDETECTOR_H_
 #define SIMPLEANOMALYDETECTOR_H_
 
-#include "anomaly_detector_util.h"
+#include "AnomalyDetectorUtil.h"
 #include "AnomalyDetector.h"
 #include <vector>
 #include <algorithm>
@@ -11,19 +11,21 @@
 
 struct correlatedFeatures {
 	string feature1, feature2;  // names of the correlated features
+	int index1, index2;
 	float corrlation;
 	Line lin_reg;
 	float threshold;
 };
 
 
-class SimpleAnomalyDetector :public TimeSeriesAnomalyDetector {
+class AnomalyDetector :public TimeSeriesAnomalyDetector {
 	vector<correlatedFeatures> cf;
 public:
-	SimpleAnomalyDetector();
-	virtual ~SimpleAnomalyDetector();
+	AnomalyDetector();
+	virtual ~AnomalyDetector();
 
-	virtual void learnNormal(const TimeSeries& ts);
+	virtual void learn(const TimeSeries& ts);
+	bool isAnomaly(float x, float y, correlatedFeatures c);
 	virtual vector<AnomalyReport> detect(const TimeSeries& ts);
 
 	vector<correlatedFeatures> getNormalModel() {
