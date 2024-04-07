@@ -37,7 +37,7 @@ int TimeSeries::InsertData() {
         while (getline(ss, field, ',')) {
             this->data[counter].push_back(stof(field));
             counter++;
-            counter = counter % 4;
+            counter = counter % this->features.size();
         }
     }
 }
